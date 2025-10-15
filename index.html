@@ -5,72 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audience-Theme Network</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f8fafc;
-            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
         .header {
-            background-color: white;
+            background: white;
             border-bottom: 1px solid #e2e8f0;
-            padding: 16px;
+            padding: 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1e293b;
-            margin-bottom: 8px;
+        .header-content { max-width: 1200px; margin: 0 auto; }
+        h1 { 
+            font-size: 28px; 
+            font-weight: 700; 
+            color: #1e293b; 
+            margin-bottom: 12px; 
         }
         .controls {
             display: flex;
-            align-items: center;
             gap: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            align-items: center;
         }
-        .search-wrapper {
-            flex: 1;
-            position: relative;
-        }
-        input[type="text"] {
+        .search-wrapper { flex: 1; }
+        input {
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #cbd5e1;
+            padding: 10px 16px;
+            border: 2px solid #cbd5e1;
             border-radius: 8px;
-            outline: none;
-            font-size: 14px;
+            font-size: 15px;
         }
-        input[type="text"]:focus {
+        input:focus {
+            outline: none;
             border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
         }
         button {
-            padding: 8px 16px;
-            background-color: #e2e8f0;
-            color: #334155;
-            border-radius: 8px;
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: white;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
         }
-        button:hover {
-            background-color: #cbd5e1;
-        }
+        button:hover { background: #2563eb; }
         .legend {
             display: flex;
-            align-items: center;
             gap: 24px;
             font-size: 14px;
         }
@@ -80,46 +67,36 @@
             gap: 8px;
         }
         .legend-box {
-            width: 16px;
-            height: 16px;
-            border-radius: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
         }
         .svg-container {
             flex: 1;
             overflow: auto;
-            position: relative;
+            padding: 20px;
         }
-        svg {
-            display: block;
-            margin: 0 auto;
-        }
+        svg { display: block; margin: 0 auto; }
         .info-panel {
-            background-color: white;
-            border-top: 1px solid #e2e8f0;
-            padding: 16px;
-            box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+            background: white;
+            border-top: 2px solid #e2e8f0;
+            padding: 20px;
             display: none;
         }
-        .info-panel.visible {
-            display: block;
-        }
-        .info-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .info-panel.visible { display: block; }
+        .info-content { max-width: 1200px; margin: 0 auto; }
         .info-title {
-            font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: 700;
             color: #1e293b;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
-        .info-section {
-            margin-top: 8px;
-        }
+        .info-section { margin-top: 12px; }
         .info-label {
             font-size: 14px;
-            color: #475569;
-            margin-bottom: 4px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 8px;
         }
         .tag-container {
             display: flex;
@@ -127,26 +104,15 @@
             gap: 8px;
         }
         .tag {
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-size: 14px;
+            font-weight: 500;
         }
-        .tag-theme {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-        .tag-related {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-        rect, circle {
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        text {
-            pointer-events: none;
-            user-select: none;
-        }
+        .tag-theme { background: #fef3c7; color: #92400e; }
+        .tag-related { background: #d1fae5; color: #065f46; }
+        rect, circle { cursor: pointer; }
+        text { pointer-events: none; user-select: none; }
     </style>
 </head>
 <body>
@@ -161,12 +127,12 @@
             </div>
             <div class="legend">
                 <div class="legend-item">
-                    <div class="legend-box" style="background-color: #3b82f6;"></div>
-                    <span style="color: #475569;">Audiences</span>
+                    <div class="legend-box" style="background:#3b82f6;"></div>
+                    <span>Audiences</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-box" style="background-color: #facc15;"></div>
-                    <span style="color: #475569;">Themes</span>
+                    <div class="legend-box" style="background:#facc15;"></div>
+                    <span>Themes</span>
                 </div>
             </div>
         </div>
@@ -179,11 +145,11 @@
     <div id="infoPanel" class="info-panel">
         <div class="info-content">
             <div class="info-title" id="infoTitle"></div>
-            <div id="infoThemes" class="info-section" style="display: none;">
+            <div id="infoThemes" class="info-section" style="display:none;">
                 <div class="info-label">Connected Themes:</div>
                 <div class="tag-container" id="themeTags"></div>
             </div>
-            <div id="infoRelated" class="info-section" style="display: none;">
+            <div id="infoRelated" class="info-section" style="display:none;">
                 <div class="info-label">Related Themes:</div>
                 <div class="tag-container" id="relatedTags"></div>
             </div>
@@ -192,47 +158,47 @@
 
     <script>
         const audiences = [
-            { id: 'a1', name: 'Housing Advocates', themes: ['Affordability', 'Permits', 'Density/Sprawl'], x: 50, y: 100 },
-            { id: 'a2', name: 'Chamber of Commerce', themes: ['Affordability', 'Workforce', 'Business Climate', 'Regional Standing'], x: 50, y: 200 },
-            { id: 'a3', name: 'City and Developers', themes: ['Density/Sprawl', 'Regulatory Reform', 'Infill', 'Greenfield', 'Reinvestment'], x: 50, y: 300 },
-            { id: 'a4', name: 'City Officials', themes: ['Timelines', 'Permits', 'Spillover Effects', 'Regulatory Reform', 'Policy Evaluation'], x: 50, y: 400 },
-            { id: 'a5', name: 'EDC stakeholders', themes: ['Regional Standing', 'Benchmarking', 'Business Climate', 'Affordability', 'Workforce'], x: 50, y: 500 },
-            { id: 'a6', name: 'Local government', themes: ['Timelines', 'Workforce', 'Communications', 'Permits'], x: 50, y: 600 },
-            { id: 'a7', name: 'Goods Movement', themes: ['Industrial', 'Freight', 'Benchmarking', 'Incentives', 'Routing'], x: 50, y: 700 },
-            { id: 'a8', name: 'Housing overlap', themes: ['Permits', 'Affordability', 'Workforce', 'Policy Evaluation'], x: 50, y: 800 },
-            { id: 'a9', name: 'Climate linkage', themes: ['Climate/Energy', 'Infill', 'Greenfield', 'Embodied Impacts', 'Permits', 'Density/Sprawl'], x: 50, y: 900 },
-            { id: 'a10', name: 'Freight forum', themes: ['Freight', 'Industrial', 'Engagement'], x: 50, y: 1000 },
-            { id: 'a11', name: 'Programs/Grants', themes: ['Corridors', 'TOD', 'Incentives', 'Grants', 'Finance', 'Intermodal'], x: 50, y: 1100 }
+            {id:'a1',name:'Housing Advocates',themes:['Affordability','Permits','Density/Sprawl'],x:50,y:100},
+            {id:'a2',name:'Chamber of Commerce',themes:['Affordability','Workforce','Business Climate','Regional Standing'],x:50,y:200},
+            {id:'a3',name:'City and Developers',themes:['Density/Sprawl','Regulatory Reform','Infill','Greenfield','Reinvestment'],x:50,y:300},
+            {id:'a4',name:'City Officials',themes:['Timelines','Permits','Spillover Effects','Regulatory Reform','Policy Evaluation'],x:50,y:400},
+            {id:'a5',name:'EDC stakeholders',themes:['Regional Standing','Benchmarking','Business Climate','Affordability','Workforce'],x:50,y:500},
+            {id:'a6',name:'Local government',themes:['Timelines','Workforce','Communications','Permits'],x:50,y:600},
+            {id:'a7',name:'Goods Movement',themes:['Industrial','Freight','Benchmarking','Incentives','Routing'],x:50,y:700},
+            {id:'a8',name:'Housing overlap',themes:['Permits','Affordability','Workforce','Policy Evaluation'],x:50,y:800},
+            {id:'a9',name:'Climate linkage',themes:['Climate/Energy','Infill','Greenfield','Embodied Impacts','Permits','Density/Sprawl'],x:50,y:900},
+            {id:'a10',name:'Freight forum',themes:['Freight','Industrial','Engagement'],x:50,y:1000},
+            {id:'a11',name:'Programs/Grants',themes:['Corridors','TOD','Incentives','Grants','Finance','Intermodal'],x:50,y:1100}
         ];
 
         const themes = [
-            { id: 't1', name: 'Affordability', x: 450, y: 150, relatedThemes: ['Workforce', 'Permits', 'Density/Sprawl', 'Finance'] },
-            { id: 't2', name: 'Workforce', x: 600, y: 250, relatedThemes: ['Affordability', 'Timelines', 'Business Climate'] },
-            { id: 't3', name: 'Timelines', x: 400, y: 400, relatedThemes: ['Permits', 'Workforce', 'Communications'] },
-            { id: 't4', name: 'Permits', x: 500, y: 300, relatedThemes: ['Timelines', 'Affordability', 'Regulatory Reform', 'Policy Evaluation'] },
-            { id: 't5', name: 'Benchmarking', x: 650, y: 600, relatedThemes: ['Regional Standing', 'Business Climate', 'Industrial'] },
-            { id: 't6', name: 'Incentives', x: 550, y: 800, relatedThemes: ['Finance', 'Grants', 'TOD', 'Industrial'] },
-            { id: 't7', name: 'Climate/Energy', x: 350, y: 900, relatedThemes: ['Infill', 'Greenfield', 'Embodied Impacts', 'Density/Sprawl'] },
-            { id: 't8', name: 'Density/Sprawl', x: 450, y: 550, relatedThemes: ['Climate/Energy', 'Affordability', 'TOD', 'Infill'] },
-            { id: 't9', name: 'TOD', x: 600, y: 900, relatedThemes: ['Corridors', 'Density/Sprawl', 'Climate/Energy', 'Intermodal'] },
-            { id: 't10', name: 'Corridors', x: 700, y: 1000, relatedThemes: ['TOD', 'Intermodal', 'Freight'] },
-            { id: 't11', name: 'Finance', x: 650, y: 750, relatedThemes: ['Grants', 'Incentives', 'Affordability'] },
-            { id: 't12', name: 'Grants', x: 700, y: 850, relatedThemes: ['Finance', 'Incentives', 'TOD'] },
-            { id: 't13', name: 'Business Climate', x: 700, y: 350, relatedThemes: ['Regional Standing', 'Workforce', 'Benchmarking'] },
-            { id: 't14', name: 'Regional Standing', x: 550, y: 450, relatedThemes: ['Business Climate', 'Benchmarking'] },
-            { id: 't15', name: 'Communications', x: 350, y: 500, relatedThemes: ['Timelines', 'Engagement'] },
-            { id: 't16', name: 'Industrial', x: 500, y: 700, relatedThemes: ['Freight', 'Routing', 'Benchmarking', 'Incentives'] },
-            { id: 't17', name: 'Freight', x: 600, y: 750, relatedThemes: ['Industrial', 'Routing', 'Corridors'] },
-            { id: 't18', name: 'Routing', x: 650, y: 650, relatedThemes: ['Freight', 'Industrial'] },
-            { id: 't19', name: 'Infill', x: 350, y: 800, relatedThemes: ['Climate/Energy', 'Greenfield', 'Density/Sprawl', 'Reinvestment'] },
-            { id: 't20', name: 'Greenfield', x: 300, y: 700, relatedThemes: ['Climate/Energy', 'Infill', 'Density/Sprawl'] },
-            { id: 't21', name: 'Embodied Impacts', x: 250, y: 850, relatedThemes: ['Climate/Energy'] },
-            { id: 't22', name: 'Policy Evaluation', x: 400, y: 300, relatedThemes: ['Permits', 'Regulatory Reform'] },
-            { id: 't23', name: 'Spillover Effects', x: 300, y: 400, relatedThemes: ['Timelines', 'Permits'] },
-            { id: 't24', name: 'Regulatory Reform', x: 350, y: 350, relatedThemes: ['Permits', 'Policy Evaluation', 'Density/Sprawl'] },
-            { id: 't25', name: 'Intermodal', x: 700, y: 950, relatedThemes: ['TOD', 'Corridors', 'Freight'] },
-            { id: 't26', name: 'Reinvestment', x: 300, y: 600, relatedThemes: ['Infill', 'Density/Sprawl'] },
-            { id: 't27', name: 'Engagement', x: 450, y: 1000, relatedThemes: ['Communications'] }
+            {id:'t1',name:'Affordability',x:450,y:150,relatedThemes:['Workforce','Permits','Density/Sprawl','Finance']},
+            {id:'t2',name:'Workforce',x:600,y:250,relatedThemes:['Affordability','Timelines','Business Climate']},
+            {id:'t3',name:'Timelines',x:400,y:400,relatedThemes:['Permits','Workforce','Communications']},
+            {id:'t4',name:'Permits',x:500,y:300,relatedThemes:['Timelines','Affordability','Regulatory Reform','Policy Evaluation']},
+            {id:'t5',name:'Benchmarking',x:650,y:600,relatedThemes:['Regional Standing','Business Climate','Industrial']},
+            {id:'t6',name:'Incentives',x:550,y:800,relatedThemes:['Finance','Grants','TOD','Industrial']},
+            {id:'t7',name:'Climate/Energy',x:350,y:900,relatedThemes:['Infill','Greenfield','Embodied Impacts','Density/Sprawl']},
+            {id:'t8',name:'Density/Sprawl',x:450,y:550,relatedThemes:['Climate/Energy','Affordability','TOD','Infill']},
+            {id:'t9',name:'TOD',x:600,y:900,relatedThemes:['Corridors','Density/Sprawl','Climate/Energy','Intermodal']},
+            {id:'t10',name:'Corridors',x:700,y:1000,relatedThemes:['TOD','Intermodal','Freight']},
+            {id:'t11',name:'Finance',x:650,y:750,relatedThemes:['Grants','Incentives','Affordability']},
+            {id:'t12',name:'Grants',x:700,y:850,relatedThemes:['Finance','Incentives','TOD']},
+            {id:'t13',name:'Business Climate',x:700,y:350,relatedThemes:['Regional Standing','Workforce','Benchmarking']},
+            {id:'t14',name:'Regional Standing',x:550,y:450,relatedThemes:['Business Climate','Benchmarking']},
+            {id:'t15',name:'Communications',x:350,y:500,relatedThemes:['Timelines','Engagement']},
+            {id:'t16',name:'Industrial',x:500,y:700,relatedThemes:['Freight','Routing','Benchmarking','Incentives']},
+            {id:'t17',name:'Freight',x:600,y:750,relatedThemes:['Industrial','Routing','Corridors']},
+            {id:'t18',name:'Routing',x:650,y:650,relatedThemes:['Freight','Industrial']},
+            {id:'t19',name:'Infill',x:350,y:800,relatedThemes:['Climate/Energy','Greenfield','Density/Sprawl','Reinvestment']},
+            {id:'t20',name:'Greenfield',x:300,y:700,relatedThemes:['Climate/Energy','Infill','Density/Sprawl']},
+            {id:'t21',name:'Embodied Impacts',x:250,y:850,relatedThemes:['Climate/Energy']},
+            {id:'t22',name:'Policy Evaluation',x:400,y:300,relatedThemes:['Permits','Regulatory Reform']},
+            {id:'t23',name:'Spillover Effects',x:300,y:400,relatedThemes:['Timelines','Permits']},
+            {id:'t24',name:'Regulatory Reform',x:350,y:350,relatedThemes:['Permits','Policy Evaluation','Density/Sprawl']},
+            {id:'t25',name:'Intermodal',x:700,y:950,relatedThemes:['TOD','Corridors','Freight']},
+            {id:'t26',name:'Reinvestment',x:300,y:600,relatedThemes:['Infill','Density/Sprawl']},
+            {id:'t27',name:'Engagement',x:450,y:1000,relatedThemes:['Communications']}
         ];
 
         let selectedNode = null;
@@ -243,18 +209,14 @@
             audiences.forEach(aud => {
                 aud.themes.forEach(themeName => {
                     const theme = themes.find(t => t.name === themeName);
-                    if (theme) {
-                        connections.push({ from: aud, to: theme, type: 'audience-theme' });
-                    }
+                    if (theme) connections.push({from:aud,to:theme,type:'audience-theme'});
                 });
             });
             themes.forEach(theme => {
                 if (theme.relatedThemes) {
                     theme.relatedThemes.forEach(relatedName => {
                         const relatedTheme = themes.find(t => t.name === relatedName);
-                        if (relatedTheme) {
-                            connections.push({ from: theme, to: relatedTheme, type: 'theme-theme' });
-                        }
+                        if (relatedTheme) connections.push({from:theme,to:relatedTheme,type:'theme-theme'});
                     });
                 }
             });
@@ -282,44 +244,43 @@
                 a.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 a.themes.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()))
             );
-
             const filteredThemes = themes.filter(t => 
                 t.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
-            connections.forEach((conn, i) => {
+            connections.forEach(conn => {
                 if (!shouldShowConnection(conn)) return;
                 const show = isConnected(conn.from) && isConnected(conn.to);
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', conn.from.x);
-                line.setAttribute('y1', conn.from.y);
-                line.setAttribute('x2', conn.to.x);
-                line.setAttribute('y2', conn.to.y);
-                line.setAttribute('stroke', conn.type === 'audience-theme' ? '#93c5fd' : '#86efac');
-                line.setAttribute('stroke-width', show ? 2 : 0.5);
-                line.setAttribute('opacity', show ? 0.6 : 0.2);
+                const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+                line.setAttribute('x1',conn.from.x);
+                line.setAttribute('y1',conn.from.y);
+                line.setAttribute('x2',conn.to.x);
+                line.setAttribute('y2',conn.to.y);
+                line.setAttribute('stroke',conn.type==='audience-theme'?'#93c5fd':'#86efac');
+                line.setAttribute('stroke-width',show?2:0.5);
+                line.setAttribute('opacity',show?0.6:0.2);
                 svg.appendChild(line);
             });
 
             filteredAudiences.forEach(aud => {
-                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                rect.setAttribute('x', aud.x - 80);
-                rect.setAttribute('y', aud.y - 15);
-                rect.setAttribute('width', 160);
-                rect.setAttribute('height', 30);
-                rect.setAttribute('rx', 6);
-                rect.setAttribute('fill', isConnected(aud) ? '#3b82f6' : '#94a3b8');
-                rect.setAttribute('opacity', isConnected(aud) ? 1 : 0.3);
-                rect.addEventListener('click', () => handleNodeClick(aud));
+                const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+                const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+                rect.setAttribute('x',aud.x-80);
+                rect.setAttribute('y',aud.y-15);
+                rect.setAttribute('width',160);
+                rect.setAttribute('height',30);
+                rect.setAttribute('rx',6);
+                rect.setAttribute('fill',isConnected(aud)?'#3b82f6':'#94a3b8');
+                rect.setAttribute('opacity',isConnected(aud)?1:0.3);
+                rect.addEventListener('click',()=>handleNodeClick(aud));
                 
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', aud.x);
-                text.setAttribute('y', aud.y + 5);
-                text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('fill', 'white');
-                text.setAttribute('font-size', '12');
-                text.setAttribute('font-weight', '600');
+                const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+                text.setAttribute('x',aud.x);
+                text.setAttribute('y',aud.y+5);
+                text.setAttribute('text-anchor','middle');
+                text.setAttribute('fill','white');
+                text.setAttribute('font-size','12');
+                text.setAttribute('font-weight','600');
                 text.textContent = aud.name;
                 
                 g.appendChild(rect);
@@ -328,28 +289,28 @@
             });
 
             filteredThemes.forEach(theme => {
-                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', theme.x);
-                circle.setAttribute('cy', theme.y);
-                circle.setAttribute('r', 45);
-                circle.setAttribute('fill', isConnected(theme) ? '#facc15' : '#cbd5e1');
-                circle.setAttribute('opacity', isConnected(theme) ? 1 : 0.3);
-                circle.addEventListener('click', () => handleNodeClick(theme));
+                const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+                const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+                circle.setAttribute('cx',theme.x);
+                circle.setAttribute('cy',theme.y);
+                circle.setAttribute('r',45);
+                circle.setAttribute('fill',isConnected(theme)?'#facc15':'#cbd5e1');
+                circle.setAttribute('opacity',isConnected(theme)?1:0.3);
+                circle.addEventListener('click',()=>handleNodeClick(theme));
                 
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', theme.x);
-                text.setAttribute('y', theme.y + 5);
-                text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('fill', '#1e293b');
-                text.setAttribute('font-size', '11');
-                text.setAttribute('font-weight', '600');
+                const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+                text.setAttribute('x',theme.x);
+                text.setAttribute('y',theme.y+5);
+                text.setAttribute('text-anchor','middle');
+                text.setAttribute('fill','#1e293b');
+                text.setAttribute('font-size','11');
+                text.setAttribute('font-weight','600');
                 
                 const parts = theme.name.split('/');
-                parts.forEach((part, i) => {
-                    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-                    tspan.setAttribute('x', theme.x);
-                    tspan.setAttribute('dy', i === 0 ? 0 : 14);
+                parts.forEach((part,i) => {
+                    const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+                    tspan.setAttribute('x',theme.x);
+                    tspan.setAttribute('dy',i===0?0:14);
                     tspan.textContent = part;
                     text.appendChild(tspan);
                 });
@@ -406,11 +367,11 @@
             document.getElementById('infoPanel').classList.remove('visible');
         }
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
+        document.getElementById('searchInput').addEventListener('input',(e)=>{
             renderNetwork(e.target.value);
         });
 
-        document.getElementById('resetBtn').addEventListener('click', () => {
+        document.getElementById('resetBtn').addEventListener('click',()=>{
             selectedNode = null;
             document.getElementById('searchInput').value = '';
             hideInfo();
