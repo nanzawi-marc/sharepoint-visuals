@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARC Projects Network Diagram</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+            padding: 24px;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 32px;
+        }
+        
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        
+        .subtitle {
+            font-size: 1.125rem;
+            color: #475569;
+            margin-bottom: 24px;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .legend-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .legend-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .legend-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #334155;
+        }
+        
+        .legend-count {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        
+        .info-box {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .info-icon {
+            font-size: 1.5rem;
+        }
+        
+        .info-content {
+            font-size: 0.875rem;
+            color: #334155;
+        }
+        
+        .info-content ul {
+            margin-top: 8px;
+            margin-left: 20px;
+        }
+        
+        .info-content li {
+            margin: 4px 0;
+        }
+        
+        .svg-container {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
+        
+        .node-info {
+            margin-top: 24px;
+            padding: 24px;
+            background: linear-gradient(to right, #f8fafc, #e2e8f0);
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+        }
+        
+        .node-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+        
+        .node-info-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .node-info-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .node-info-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .node-info-name {
+            font-size: 1.125rem;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+        
+        .node-info-type {
+            font-size: 0.875rem;
+            color: #475569;
+        }
+        
+        .node-info-type span {
+            font-weight: 600;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: capitalize;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px 12px;
+        }
+        
+        .close-btn:hover {
+            color: #334155;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        svg {
+            cursor: move;
+        }
+        
+        .node {
+            cursor: pointer;
+        }
+        
+        .link {
+            stroke-opacity: 0.4;
+        }
+        
+        .link-highlight {
+            stroke-opacity: 0.8 !important;
+        }
+        
+        .link-dim {
+            stroke-opacity: 0.1 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>MARC Projects Network Diagram</h1>
+            <p class="subtitle">Comprehensive visualization of interdependencies: Projects → Forecasts → Models → Datasets</p>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-circle" style="background-color: #3b82f6;"></div>
+                    <div class="legend-text">
+                        <span class="legend-label">Projects</span>
+                        <span class="legend-count">16 total</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background-color: #8b5cf6;"></div>
+                    <div class="legend-text">
+                        <span class="legend-label">Forecasts</span>
+                        <span class="legend-count">5 types</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background-color: #ec4899;"></div>
+                    <div class="legend-text">
+                        <span class="legend-label">Models</span>
+                        <span class="legend-count">6 models</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background-color: #10b981;"></div>
+                    <div class="legend-text">
+                        <span class="legend-label">Datasets</span>
+                        <span class="legend-count">9 sources</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <span class="info-icon">💡</span>
+                <div class="info-content">
+                    <strong>Interactive Features:</strong>
+                    <ul>
+                        <li><strong>Click</strong> any node to see details and highlight connections</li>
+                        <li><strong>Drag</strong> nodes to rearrange the layout</li>
+                        <li><strong>Scroll</strong> to zoom in/out</li>
+                        <li><strong>Pan</strong> by dragging the background</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="svg-container">
+                <svg id="network-svg" width="1600" height="1000"></svg>
+            </div>
+            
+            <div id="node-info" class="node-info hidden">
+                <div class="node-info-header">
+                    <div class="node-info-title">
+                        <div id="node-color" class="node-info-circle"></div>
+                        <h3 id="node-id" class="node-info-id"></h3>
+                    </div>
+                    <button id="close-btn" class="close-btn">✕</button>
+                </div>
+                <p id="node-name" class="node-info-name"></p>
+                <p class="node-info-type">Type: <span id="node-type"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structure
+        const nodes = [
+            // Projects
+            { id: 'P1', name: 'Transportation Outlook 2040 (2015)', type: 'project', group: 1 },
+            { id: 'P2', name: 'Connected KC 2050 (2020)', type: 'project', group: 1 },
+            { id: 'P3', name: 'Regional Pop & Employment Forecasts 2050', type: 'project', group: 1 },
+            { id: 'P4', name: 'Smart Moves 3.0 (2017)', type: 'project', group: 1 },
+            { id: 'P5', name: 'CEDS 2019', type: 'project', group: 1 },
+            { id: 'P6', name: 'CEDS 2024-2029', type: 'project', group: 1 },
+            { id: 'P7', name: 'KC Regional Climate Action Plan', type: 'project', group: 1 },
+            { id: 'P8', name: 'Multi-Hazard Mitigation (2020)', type: 'project', group: 1 },
+            { id: 'P9', name: 'Multi-Hazard Mitigation (2025)', type: 'project', group: 1 },
+            { id: 'P10', name: 'Regional Landfill Capacity', type: 'project', group: 1 },
+            { id: 'P11', name: 'KC Regional EV Readiness', type: 'project', group: 1 },
+            { id: 'P12', name: 'Regional Aviation System', type: 'project', group: 1 },
+            { id: 'P13', name: 'Transit Zero-Fare Impact', type: 'project', group: 1 },
+            { id: 'P14', name: 'Connected Freight KC 2050', type: 'project', group: 1 },
+            { id: 'P15', name: 'Transportation Performance', type: 'project', group: 1 },
+            { id: 'P16', name: 'Congestion Management', type: 'project', group: 1 },
+            
+            // Forecasts
+            { id: 'F1', name: 'Regional TDM', type: 'forecast', group: 2 },
+            { id: 'F2', name: 'Land Use', type: 'forecast', group: 2 },
+            { id: 'F3', name: 'Population', type: 'forecast', group: 2 },
+            { id: 'F4', name: 'Employment', type: 'forecast', group: 2 },
+            { id: 'F5', name: 'GHG Emissions', type: 'forecast', group: 2 },
+            
+            // Models
+            { id: 'M1', name: 'REMI', type: 'model', group: 3 },
+            { id: 'M2', name: 'UrbanSIM', type: 'model', group: 3 },
+            { id: 'M9', name: 'Replica', type: 'model', group: 3 },
+            { id: 'M10', name: 'EPA MOVES4', type: 'model', group: 3 },
+            { id: 'M11', name: 'TransCAD', type: 'model', group: 3 },
+            { id: 'M12', name: 'ActivitySim', type: 'model', group: 3 },
+            
+            // Datasets
+            { id: 'D5', name: 'Dodge Data & Analytics', type: 'dataset', group: 4 },
+            { id: 'D6', name: 'INRIX (RITIS)', type: 'dataset', group: 4 },
+            { id: 'D7', name: 'Aerial Imagery', type: 'dataset', group: 4 },
+            { id: 'D8', name: 'HBA Building Permits', type: 'dataset', group: 4 },
+            { id: 'D9', name: 'Travel Demand Survey', type: 'dataset', group: 4 },
+            { id: 'D10', name: 'RSQE (U Michigan)', type: 'dataset', group: 4 },
+            { id: 'D11', name: 'Activity Centers', type: 'dataset', group: 4 },
+            { id: 'D12', name: 'Parcel Data', type: 'dataset', group: 4 },
+            { id: 'D13', name: 'Top Employers', type: 'dataset', group: 4 },
+        ];
+
+        const links = [
+            // P1 connections
+            { source: 'P1', target: 'F1', type: 'uses_forecast' },
+            { source: 'P1', target: 'F2', type: 'uses_forecast' },
+            { source: 'P1', target: 'F3', type: 'uses_forecast' },
+            { source: 'P1', target: 'F4', type: 'uses_forecast' },
+            
+            // P2 connections
+            { source: 'P2', target: 'F1', type: 'uses_forecast' },
+            { source: 'P2', target: 'F2', type: 'uses_forecast' },
+            { source: 'P2', target: 'F3', type: 'uses_forecast' },
+            { source: 'P2', target: 'F4', type: 'uses_forecast' },
+            
+            // P3 connections
+            { source: 'P3', target: 'F3', type: 'uses_forecast' },
+            { source: 'P3', target: 'F4', type: 'uses_forecast' },
+            
+            // P4 connections
+            { source: 'P4', target: 'F1', type: 'uses_forecast' },
+            
+            // P5 connections
+            { source: 'P5', target: 'F3', type: 'uses_forecast' },
+            { source: 'P5', target: 'F4', type: 'uses_forecast' },
+            
+            // P6 connections
+            { source: 'P6', target: 'F3', type: 'uses_forecast' },
+            { source: 'P6', target: 'F4', type: 'uses_forecast' },
+            
+            // P7 connections
+            { source: 'P7', target: 'F1', type: 'uses_forecast' },
+            { source: 'P7', target: 'F5', type: 'uses_forecast' },
+            
+            // P8, P9 connections
+            { source: 'P8', target: 'F3', type: 'uses_forecast' },
+            { source: 'P9', target: 'F3', type: 'uses_forecast' },
+            
+            // P10 connections
+            { source: 'P10', target: 'F3', type: 'uses_forecast' },
+            { source: 'P10', target: 'F4', type: 'uses_forecast' },
+            
+            // P11 connections
+            { source: 'P11', target: 'F3', type: 'uses_forecast' },
+            
+            // P12 connections
+            { source: 'P12', target: 'F3', type: 'uses_forecast' },
+            { source: 'P12', target: 'F4', type: 'uses_forecast' },
+            
+            // P13, P14 connections
+            { source: 'P13', target: 'F1', type: 'uses_forecast' },
+            { source: 'P14', target: 'F1', type: 'uses_forecast' },
+            
+            // P15, P16 direct to datasets
+            { source: 'P15', target: 'D5', type: 'uses_dataset' },
+            { source: 'P15', target: 'D6', type: 'uses_dataset' },
+            { source: 'P15', target: 'D7', type: 'uses_dataset' },
+            { source: 'P15', target: 'D8', type: 'uses_dataset' },
+            { source: 'P15', target: 'D9', type: 'uses_dataset' },
+            { source: 'P15', target: 'D10', type: 'uses_dataset' },
+            { source: 'P16', target: 'D5', type: 'uses_dataset' },
+            { source: 'P16', target: 'D6', type: 'uses_dataset' },
+            { source: 'P16', target: 'D7', type: 'uses_dataset' },
+            { source: 'P16', target: 'D8', type: 'uses_dataset' },
+            { source: 'P16', target: 'D9', type: 'uses_dataset' },
+            { source: 'P16', target: 'D10', type: 'uses_dataset' },
+            
+            // Forecasts to Models
+            { source: 'F1', target: 'M9', type: 'generated_by' },
+            { source: 'F1', target: 'M11', type: 'generated_by' },
+            { source: 'F1', target: 'M12', type: 'generated_by' },
+            { source: 'F2', target: 'M2', type: 'generated_by' },
+            { source: 'F3', target: 'M1', type: 'generated_by' },
+            { source: 'F3', target: 'M2', type: 'generated_by' },
+            { source: 'F4', target: 'M1', type: 'generated_by' },
+            { source: 'F4', target: 'M2', type: 'generated_by' },
+            { source: 'F5', target: 'M10', type: 'generated_by' },
+            
+            // Models to Datasets
+            { source: 'M1', target: 'D13', type: 'uses_dataset' },
+            { source: 'M1', target: 'D5', type: 'uses_dataset' },
+            { source: 'M1', target: 'D8', type: 'uses_dataset' },
+            { source: 'M1', target: 'D10', type: 'uses_dataset' },
+            { source: 'M1', target: 'D11', type: 'uses_dataset' },
+            { source: 'M2', target: 'D13', type: 'uses_dataset' },
+            { source: 'M2', target: 'D5', type: 'uses_dataset' },
+            { source: 'M2', target: 'D11', type: 'uses_dataset' },
+            { source: 'M9', target: 'D12', type: 'uses_dataset' },
+            { source: 'M11', target: 'D12', type: 'uses_dataset' },
+            { source: 'M11', target: 'D9', type: 'uses_dataset' },
+            { source: 'M12', target: 'D12', type: 'uses_dataset' },
+            { source: 'M12', target: 'D9', type: 'uses_dataset' },
+        ];
+
+        const width = 1600;
+        const height = 1000;
+
+        const svg = d3.select('#network-svg');
+        const g = svg.append('g');
+
+        // Color scale
+        const color = d3.scaleOrdinal()
+            .domain(['project', 'forecast', 'model', 'dataset'])
+            .range(['#3b82f6', '#8b5cf6', '#ec4899', '#10b981']);
+
+        // Zoom behavior
+        svg.call(d3.zoom()
+            .extent([[0, 0], [width, height]])
+            .scaleExtent([0.3, 5])
+            .on('zoom', (event) => {
+                g.attr('transform', event.transform);
+            }));
+
+        // Create simulation
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
+                if (d.type === 'uses_forecast') return 150;
+                if (d.type === 'generated_by') return 120;
+                if (d.type === 'uses_dataset') return 100;
+                return 100;
+            }))
+            .force('charge', d3.forceManyBody().strength(-600))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(50))
+            .force('x', d3.forceX(d => {
+                if (d.type === 'project') return width * 0.15;
+                if (d.type === 'forecast') return width * 0.4;
+                if (d.type === 'model') return width * 0.6;
+                if (d.type === 'dataset') return width * 0.85;
+                return width / 2;
+            }).strength(0.3))
+            .force('y', d3.forceY(height / 2).strength(0.1));
+
+        // Create links
+        const link = g.append('g')
+            .selectAll('line')
+            .data(links)
+            .join('line')
+            .attr('class', 'link')
+            .attr('stroke', d => {
+                if (d.type === 'uses_forecast') return '#64748b';
+                if (d.type === 'generated_by') return '#7c3aed';
+                if (d.type === 'uses_dataset') return '#059669';
+                return '#94a3b8';
+            })
+            .attr('stroke-width', 1.5);
+
+        // Create nodes
+        const node = g.append('g')
+            .selectAll('circle')
+            .data(nodes)
+            .join('circle')
+            .attr('class', 'node')
+            .attr('r', d => {
+                if (d.type === 'project') return 14;
+                if (d.type === 'forecast') return 12;
+                if (d.type === 'model') return 10;
+                return 8;
+            })
+            .attr('fill', d => color(d.type))
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2.5)
+            .call(d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended))
+            .on('click', (event, d) => {
+                showNodeInfo(d);
+                highlightConnections(d);
+            })
+            .on('mouseover', function(event, d) {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr('r', d.type === 'project' ? 18 : d.type === 'forecast' ? 16 : d.type === 'model' ? 14 : 12);
+            })
+            .on('mouseout', function(event, d) {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr('r', d.type === 'project' ? 14 : d.type === 'forecast' ? 12 : d.type === 'model' ? 10 : 8);
+            });
+
+        // Add labels
+        const labels = g.append('g')
+            .selectAll('text')
+            .data(nodes)
+            .join('text')
+            .text(d => d.id)
+            .attr('font-size', 11)
+            .attr('font-weight', 600)
+            .attr('dx', 18)
+            .attr('dy', 4)
+            .style('pointer-events', 'none')
+            .style('user-select', 'none')
+            .attr('fill', '#1e293b');
+
+        // Update positions
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+
+            node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+
+            labels
+                .attr('x', d => d.x)
+                .attr('y', d => d.y);
+        });
+
+        // Drag functions
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        // Show node info
+        function showNodeInfo(d) {
+            const infoBox = document.getElementById('node-info');
+            const colorMap = {
+                'project': '#3b82f6',
+                'forecast': '#8b5cf6',
+                'model': '#ec4899',
+                'dataset': '#10b981'
+            };
+            
+            document.getElementById('node-color').style.backgroundColor = colorMap[d.type];
+            document.getElementById('node-id').textContent = d.id;
+            document.getElementById('node-name').textContent = d.name;
+            document.getElementById('node-type').textContent = d.type;
+            
+            infoBox.classList.remove('hidden');
+        }
+
+        // Highlight connections
+        function highlightConnections(d) {
+            link.classed('link-dim', true);
+            link.filter(l => 
+                (l.source.id === d.id || l.target.id === d.id) ||
+                (l.source === d.id || l.target === d.id)
+            ).classed('link-dim', false).classed('link-highlight', true);
+        }
+
+        // Reset highlighting
+        function resetHighlight() {
+            link.classed('link-dim', false).classed('link-highlight', false);
+        }
+
+        // Close button
+        document.getElementById('close-btn').addEventListener('click', () => {
+            document.getElementById('node-info').classList.add('hidden');
+            resetHighlight();
+        });
+    </script>
+</body>
+</html>
