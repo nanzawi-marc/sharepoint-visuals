@@ -212,42 +212,44 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="card">
             <h1>MARC Projects Network Diagram</h1>
             <p class="subtitle">Comprehensive visualization of interdependencies: Projects → Forecasts → Models → Datasets</p>
             
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-circle" style="background-color: #3b82f6;"></div>
-                    <div class="legend-text">
-                        <span class="legend-label">Projects</span>
-                        <span class="legend-count">16 total</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-circle" style="background-color: #8b5cf6;"></div>
-                    <div class="legend-text">
-                        <span class="legend-label">Forecasts</span>
-                        <span class="legend-count">5 types</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-circle" style="background-color: #ec4899;"></div>
-                    <div class="legend-text">
-                        <span class="legend-label">Models</span>
-                        <span class="legend-count">6 models</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-circle" style="background-color: #10b981;"></div>
-                    <div class="legend-text">
-                        <span class="legend-label">Datasets</span>
-                        <span class="legend-count">9 sources</span>
-                    </div>
-                </div>
-            </div>
+           <div class="legend">
+    <div class="legend-item">
+        <div class="legend-circle" style="background-color: #3b82f6;"></div>
+        <div class="legend-text">
+            <span class="legend-label">Projects</span>
+            <span class="legend-count">17 total</span>
+        </div>
+    </div>
+    <div class="legend-item">
+        <div class="legend-circle" style="background-color: #8b5cf6;"></div>
+        <div class="legend-text">
+            <span class="legend-label">Forecasts</span>
+            <span class="legend-count">12 total</span>
+        </div>
+    </div>
+    <div class="legend-item">
+        <div class="legend-circle" style="background-color: #ec4899;"></div>
+        <div class="legend-text">
+            <span class="legend-label">Models</span>
+            <span class="legend-count">12 total</span>
+        </div>
+    </div>
+    <div class="legend-item">
+        <div class="legend-circle" style="background-color: #10b981;"></div>
+        <div class="legend-text">
+            <span class="legend-label">Datasets</span>
+            <span class="legend-count">13 total</span>
+        </div>
+    </div>
+</div>
+
             
             <div class="info-box">
                 <span class="info-icon">💡</span>
@@ -282,144 +284,159 @@
 
     <script>
         // Data structure
-        const nodes = [
-            // Projects
-            { id: 'P1', name: 'Transportation Outlook 2040 (2015)', type: 'project', group: 1 },
-            { id: 'P2', name: 'Connected KC 2050 (2020)', type: 'project', group: 1 },
-            { id: 'P3', name: 'Regional Pop & Employment Forecasts 2050', type: 'project', group: 1 },
-            { id: 'P4', name: 'Smart Moves 3.0 (2017)', type: 'project', group: 1 },
-            { id: 'P5', name: 'CEDS 2019', type: 'project', group: 1 },
-            { id: 'P6', name: 'CEDS 2024-2029', type: 'project', group: 1 },
-            { id: 'P7', name: 'KC Regional Climate Action Plan', type: 'project', group: 1 },
-            { id: 'P8', name: 'Multi-Hazard Mitigation (2020)', type: 'project', group: 1 },
-            { id: 'P9', name: 'Multi-Hazard Mitigation (2025)', type: 'project', group: 1 },
-            { id: 'P10', name: 'Regional Landfill Capacity', type: 'project', group: 1 },
-            { id: 'P11', name: 'KC Regional EV Readiness', type: 'project', group: 1 },
-            { id: 'P12', name: 'Regional Aviation System', type: 'project', group: 1 },
-            { id: 'P13', name: 'Transit Zero-Fare Impact', type: 'project', group: 1 },
-            { id: 'P14', name: 'Connected Freight KC 2050', type: 'project', group: 1 },
-            { id: 'P15', name: 'Transportation Performance', type: 'project', group: 1 },
-            { id: 'P16', name: 'Congestion Management', type: 'project', group: 1 },
-            
-            // Forecasts
-            { id: 'F1', name: 'Regional TDM', type: 'forecast', group: 2 },
-            { id: 'F2', name: 'Land Use', type: 'forecast', group: 2 },
-            { id: 'F3', name: 'Population', type: 'forecast', group: 2 },
-            { id: 'F4', name: 'Employment', type: 'forecast', group: 2 },
-            { id: 'F5', name: 'GHG Emissions', type: 'forecast', group: 2 },
-            
-            // Models
-            { id: 'M1', name: 'REMI', type: 'model', group: 3 },
-            { id: 'M2', name: 'UrbanSIM', type: 'model', group: 3 },
-            { id: 'M9', name: 'Replica', type: 'model', group: 3 },
-            { id: 'M10', name: 'EPA MOVES4', type: 'model', group: 3 },
-            { id: 'M11', name: 'TransCAD', type: 'model', group: 3 },
-            { id: 'M12', name: 'ActivitySim', type: 'model', group: 3 },
-            
-            // Datasets
-            { id: 'D5', name: 'Dodge Data & Analytics', type: 'dataset', group: 4 },
-            { id: 'D6', name: 'INRIX (RITIS)', type: 'dataset', group: 4 },
-            { id: 'D7', name: 'Aerial Imagery', type: 'dataset', group: 4 },
-            { id: 'D8', name: 'HBA Building Permits', type: 'dataset', group: 4 },
-            { id: 'D9', name: 'Travel Demand Survey', type: 'dataset', group: 4 },
-            { id: 'D10', name: 'RSQE (U Michigan)', type: 'dataset', group: 4 },
-            { id: 'D11', name: 'Activity Centers', type: 'dataset', group: 4 },
-            { id: 'D12', name: 'Parcel Data', type: 'dataset', group: 4 },
-            { id: 'D13', name: 'Top Employers', type: 'dataset', group: 4 },
-        ];
+        // Data structure derived from forecasting_model_inventory.xlsx
+        // Projects, Forecasts, Models, DataServices sheets
+
+const nodes = [
+    // Projects
+ { id: 'P1', name: 'Transportation Outlook 2040 (Updated 2015)', type: 'project', group: 1 },
+    { id: 'P2', name: 'Connected KC 2050 (2020)', type: 'project', group: 1 },
+    { id: 'P3', name: 'Regional Population & Employment Forecasts 2050 (2024)', type: 'project', group: 1 },
+    { id: 'P4', name: 'Smart Moves 3.0 – Regional Transit and Mobility Plan (2017)', type: 'project', group: 1 },
+    { id: 'P5', name: 'Comprehensive Economic Development Strategy (CEDS) 2019', type: 'project', group: 1 },
+    { id: 'P6', name: 'Comprehensive Economic Development Strategy (CEDS) 2024-2029', type: 'project', group: 1 },
+    { id: 'P7', name: 'Kansas City Regional Climate Action Plan (2021)', type: 'project', group: 1 },
+    { id: 'P8', name: 'Regional Multi-Hazard Mitigation Plan (2020)', type: 'project', group: 1 },
+    { id: 'P9', name: 'Regional Multi-Hazard Mitigation Plan Update (2025)', type: 'project', group: 1 },
+    { id: 'P10', name: 'Regional Landfill Capacity Study (2024)', type: 'project', group: 1 },
+    { id: 'P11', name: 'Kansas City Regional Electric Vehicle (EV) Readiness Plan (2025)', type: 'project', group: 1 },
+    { id: 'P12', name: 'Regional Aviation System Plan (2015)', type: 'project', group: 1 },
+    { id: 'P13', name: 'Transit Zero-Fare Impact Analysis (2022)', type: 'project', group: 1 },
+    { id: 'P14', name: 'Connected Freight KC 2050', type: 'project', group: 1 },
+    { id: 'P15', name: 'Transportation Performance Management Report', type: 'project', group: 1 },
+    { id: 'P16', name: 'Transportation Congestion Management Report', type: 'project', group: 1 },
+    { id: 'P17', name: 'Operation Green Light (OGL) Services', type: 'project', group: 1 },
+
+    // Forecasts
+    { id: 'F1', name: 'Regional Travel Demand Model (TDM)', type: 'forecast', group: 2 },
+    { id: 'F2', name: 'Land Use Forecast', type: 'forecast', group: 2 },
+    { id: 'F3', name: 'Population Forecast', type: 'forecast', group: 2 },
+    { id: 'F4', name: 'Employment Forecast', type: 'forecast', group: 2 },
+    { id: 'F5', name: 'Greenhouse Gas Emissions Forecast', type: 'forecast', group: 2 },
+    { id: 'F6', name: 'Regional Traffic Signal Coordination Models', type: 'forecast', group: 2 },
+    { id: 'F7', name: 'Regional Traffic Monitoring System', type: 'forecast', group: 2 },
+    { id: 'F8', name: 'Network Infrastructure Monitoring', type: 'forecast', group: 2 },
+    { id: 'F9', name: 'Asset Management and Work Order System', type: 'forecast', group: 2 },
+    { id: 'F10', name: 'Regional Video Security Platform', type: 'forecast', group: 2 },
+    { id: 'F11', name: 'Performance Measurement Tracking', type: 'forecast', group: 2 },
+    { id: 'F12', name: 'Request-driven projects', type: 'forecast', group: 2 },
+
+    // Models
+    { id: 'M1', name: 'REMI', type: 'model', group: 3 },
+    { id: 'M2', name: 'UrbanSIM', type: 'model', group: 3 },
+    { id: 'M3', name: 'Synchro Version 12', type: 'model', group: 3 },
+    { id: 'M4', name: 'TransSuite', type: 'model', group: 3 },
+    { id: 'M5', name: 'SolarWinds', type: 'model', group: 3 },
+    { id: 'M6', name: 'Brightly', type: 'model', group: 3 },
+    { id: 'M7', name: 'Genetec Security Desk', type: 'model', group: 3 },
+    { id: 'M8', name: 'Iteris Clear Guide', type: 'model', group: 3 },
+    { id: 'M9', name: 'Replica', type: 'model', group: 3 },
+    { id: 'M10', name: 'EPA MOVES4', type: 'model', group: 3 },
+    { id: 'M11', name: 'TransCAD', type: 'model', group: 3 },
+    { id: 'M12', name: 'ActivitySim', type: 'model', group: 3 },
+
+    // Datasets
+    { id: 'D1', name: 'CoStar', type: 'dataset', group: 4 },
+    { id: 'D2', name: 'Lightcast', type: 'dataset', group: 4 },
+    { id: 'D3', name: 'DataAxle (Third-Party)', type: 'dataset', group: 4 },
+    { id: 'D4', name: 'Miovision', type: 'dataset', group: 4 },
+    { id: 'D5', name: 'Dodge Data and Analytics', type: 'dataset', group: 4 },
+    { id: 'D6', name: 'INRIX (RITIS)', type: 'dataset', group: 4 },
+    { id: 'D7', name: 'Aerial Imagery', type: 'dataset', group: 4 },
+    { id: 'D8', name: 'HBA Building Permits', type: 'dataset', group: 4 },
+    { id: 'D9', name: 'Travel Demand Survey (Decennial)', type: 'dataset', group: 4 },
+    { id: 'D10', name: 'RSQE (University of Michigan)', type: 'dataset', group: 4 },
+    { id: 'D11', name: 'Activity Centers', type: 'dataset', group: 4 },
+    { id: 'D12', name: 'Parcel data', type: 'dataset', group: 4 },
+    { id: 'D13', name: 'Top Employers - KC Business Journal', type: 'dataset', group: 4 },
+];
+
+        // Links derived from tabs: P_F, F_M, F_D, M_D
+        // P_F: Project -> Forecast (uses_forecast)
+        // F_M: Forecast -> Model (generated_by)
+        // F_D: Dataset -> Forecast (inputs_forecast)
+        // M_D: Model -> Dataset (uses_dataset)
 
         const links = [
-            // P1 connections
-            { source: 'P1', target: 'F1', type: 'uses_forecast' },
-            { source: 'P1', target: 'F2', type: 'uses_forecast' },
-            { source: 'P1', target: 'F3', type: 'uses_forecast' },
-            { source: 'P1', target: 'F4', type: 'uses_forecast' },
-            
-            // P2 connections
-            { source: 'P2', target: 'F1', type: 'uses_forecast' },
-            { source: 'P2', target: 'F2', type: 'uses_forecast' },
-            { source: 'P2', target: 'F3', type: 'uses_forecast' },
-            { source: 'P2', target: 'F4', type: 'uses_forecast' },
-            
-            // P3 connections
-            { source: 'P3', target: 'F3', type: 'uses_forecast' },
-            { source: 'P3', target: 'F4', type: 'uses_forecast' },
-            
-            // P4 connections
-            { source: 'P4', target: 'F1', type: 'uses_forecast' },
-            
-            // P5 connections
-            { source: 'P5', target: 'F3', type: 'uses_forecast' },
-            { source: 'P5', target: 'F4', type: 'uses_forecast' },
-            
-            // P6 connections
-            { source: 'P6', target: 'F3', type: 'uses_forecast' },
-            { source: 'P6', target: 'F4', type: 'uses_forecast' },
-            
-            // P7 connections
-            { source: 'P7', target: 'F1', type: 'uses_forecast' },
-            { source: 'P7', target: 'F5', type: 'uses_forecast' },
-            
-            // P8, P9 connections
-            { source: 'P8', target: 'F3', type: 'uses_forecast' },
-            { source: 'P9', target: 'F3', type: 'uses_forecast' },
-            
-            // P10 connections
-            { source: 'P10', target: 'F3', type: 'uses_forecast' },
-            { source: 'P10', target: 'F4', type: 'uses_forecast' },
-            
-            // P11 connections
-            { source: 'P11', target: 'F3', type: 'uses_forecast' },
-            
-            // P12 connections
-            { source: 'P12', target: 'F3', type: 'uses_forecast' },
-            { source: 'P12', target: 'F4', type: 'uses_forecast' },
-            
-            // P13, P14 connections
-            { source: 'P13', target: 'F1', type: 'uses_forecast' },
-            { source: 'P14', target: 'F1', type: 'uses_forecast' },
-            
-            // P15, P16 direct to datasets
-            { source: 'P15', target: 'D5', type: 'uses_dataset' },
-            { source: 'P15', target: 'D6', type: 'uses_dataset' },
-            { source: 'P15', target: 'D7', type: 'uses_dataset' },
-            { source: 'P15', target: 'D8', type: 'uses_dataset' },
-            { source: 'P15', target: 'D9', type: 'uses_dataset' },
-            { source: 'P15', target: 'D10', type: 'uses_dataset' },
-            { source: 'P16', target: 'D5', type: 'uses_dataset' },
-            { source: 'P16', target: 'D6', type: 'uses_dataset' },
-            { source: 'P16', target: 'D7', type: 'uses_dataset' },
-            { source: 'P16', target: 'D8', type: 'uses_dataset' },
-            { source: 'P16', target: 'D9', type: 'uses_dataset' },
-            { source: 'P16', target: 'D10', type: 'uses_dataset' },
-            
-            // Forecasts to Models
-            { source: 'F1', target: 'M9', type: 'generated_by' },
-            { source: 'F1', target: 'M11', type: 'generated_by' },
-            { source: 'F1', target: 'M12', type: 'generated_by' },
-            { source: 'F2', target: 'M2', type: 'generated_by' },
-            { source: 'F3', target: 'M1', type: 'generated_by' },
-            { source: 'F3', target: 'M2', type: 'generated_by' },
-            { source: 'F4', target: 'M1', type: 'generated_by' },
-            { source: 'F4', target: 'M2', type: 'generated_by' },
-            { source: 'F5', target: 'M10', type: 'generated_by' },
-            
-            // Models to Datasets
-            { source: 'M1', target: 'D13', type: 'uses_dataset' },
-            { source: 'M1', target: 'D5', type: 'uses_dataset' },
-            { source: 'M1', target: 'D8', type: 'uses_dataset' },
-            { source: 'M1', target: 'D10', type: 'uses_dataset' },
-            { source: 'M1', target: 'D11', type: 'uses_dataset' },
-            { source: 'M2', target: 'D13', type: 'uses_dataset' },
-            { source: 'M2', target: 'D5', type: 'uses_dataset' },
-            { source: 'M2', target: 'D11', type: 'uses_dataset' },
-            { source: 'M9', target: 'D12', type: 'uses_dataset' },
-            { source: 'M11', target: 'D12', type: 'uses_dataset' },
-            { source: 'M11', target: 'D9', type: 'uses_dataset' },
-            { source: 'M12', target: 'D12', type: 'uses_dataset' },
-            { source: 'M12', target: 'D9', type: 'uses_dataset' },
-        ];
+    // P_F: Project -> Forecast
+    { source: 'P1', target: 'F1', type: 'uses_forecast' },
+    { source: 'P1', target: 'F10', type: 'uses_forecast' },
+    { source: 'P1', target: 'F11', type: 'uses_forecast' },
+    { source: 'P1', target: 'F2', type: 'uses_forecast' },
+    { source: 'P1', target: 'F3', type: 'uses_forecast' },
+    { source: 'P1', target: 'F4', type: 'uses_forecast' },
+    { source: 'P1', target: 'F6', type: 'uses_forecast' },
+    { source: 'P1', target: 'F7', type: 'uses_forecast' },
+    { source: 'P1', target: 'F8', type: 'uses_forecast' },
+    { source: 'P1', target: 'F9', type: 'uses_forecast' },
+    { source: 'P10', target: 'F3', type: 'uses_forecast' },
+    { source: 'P10', target: 'F4', type: 'uses_forecast' },
+    { source: 'P11', target: 'F3', type: 'uses_forecast' },
+    { source: 'P12', target: 'F3', type: 'uses_forecast' },
+    { source: 'P12', target: 'F4', type: 'uses_forecast' },
+    { source: 'P13', target: 'F1', type: 'uses_forecast' },
+    { source: 'P14', target: 'F1', type: 'uses_forecast' },
+    { source: 'P15', target: 'F1', type: 'uses_forecast' },
+    { source: 'P16', target: 'F1', type: 'uses_forecast' },
+    { source: 'P17', target: 'F11', type: 'uses_forecast' },
+    { source: 'P17', target: 'F6', type: 'uses_forecast' },
+    { source: 'P17', target: 'F7', type: 'uses_forecast' },
+    { source: 'P17', target: 'F8', type: 'uses_forecast' },
+    { source: 'P17', target: 'F9', type: 'uses_forecast' },
+    { source: 'P2', target: 'F1', type: 'uses_forecast' },
+    { source: 'P2', target: 'F2', type: 'uses_forecast' },
+    { source: 'P2', target: 'F3', type: 'uses_forecast' },
+    { source: 'P2', target: 'F4', type: 'uses_forecast' },
+    { source: 'P3', target: 'F3', type: 'uses_forecast' },
+    { source: 'P3', target: 'F4', type: 'uses_forecast' },
+    { source: 'P4', target: 'F1', type: 'uses_forecast' },
+    { source: 'P5', target: 'F3', type: 'uses_forecast' },
+    { source: 'P5', target: 'F4', type: 'uses_forecast' },
+    { source: 'P6', target: 'F3', type: 'uses_forecast' },
+    { source: 'P6', target: 'F4', type: 'uses_forecast' },
+    { source: 'P7', target: 'F1', type: 'uses_forecast' },
+    { source: 'P7', target: 'F5', type: 'uses_forecast' },
+    { source: 'P8', target: 'F3', type: 'uses_forecast' },
+    { source: 'P9', target: 'F3', type: 'uses_forecast' },
 
+    // F_M: Forecast -> Model
+    { source: 'F1', target: 'M11', type: 'generated_by' },
+    { source: 'F1', target: 'M12', type: 'generated_by' },
+    { source: 'F1', target: 'M9', type: 'generated_by' },
+    { source: 'F3', target: 'M1', type: 'generated_by' },
+    { source: 'F3', target: 'M2', type: 'generated_by' },
+    { source: 'F4', target: 'M1', type: 'generated_by' },
+    { source: 'F5', target: 'M10', type: 'generated_by' },
+    { source: 'F6', target: 'M3', type: 'generated_by' },
+    { source: 'F8', target: 'M5', type: 'generated_by' },
+    { source: 'F10', target: 'M7', type: 'generated_by' },
+    { source: 'F11', target: 'M8', type: 'generated_by' },
+    { source: 'F2', target: 'M2', type: 'generated_by' },
+
+    // F_D: Dataset -> Forecast (inputs to forecast)
+    { source: 'D1', target: 'F12', type: 'inputs_forecast' },
+    { source: 'D2', target: 'F12', type: 'inputs_forecast' },
+    { source: 'D3', target: 'F12', type: 'inputs_forecast' },
+    { source: 'D4', target: 'F6', type: 'inputs_forecast' },
+    { source: 'D5', target: 'F2', type: 'inputs_forecast' },
+    { source: 'D6', target: 'F1', type: 'inputs_forecast' },
+    { source: 'D8', target: 'F3', type: 'inputs_forecast' },
+    { source: 'D9', target: 'F1', type: 'inputs_forecast' },
+    { source: 'D10', target: 'F3', type: 'inputs_forecast' },
+    { source: 'D10', target: 'F4', type: 'inputs_forecast' },
+    { source: 'D13', target: 'F12', type: 'inputs_forecast' },
+
+    // M_D: Model -> Dataset
+    { source: 'M1', target: 'D10', type: 'uses_dataset' },
+    { source: 'M1', target: 'D5', type: 'uses_dataset' },
+    { source: 'M1', target: 'D8', type: 'uses_dataset' },
+    { source: 'M2', target: 'D1', type: 'uses_dataset' },
+    { source: 'M2', target: 'D5', type: 'uses_dataset' },
+    { source: 'M2', target: 'D11', type: 'uses_dataset' },
+    { source: 'M3', target: 'D4', type: 'uses_dataset' },
+    { source: 'M11', target: 'D9', type: 'uses_dataset' },
+    { source: 'M12', target: 'D9', type: 'uses_dataset' },
+];
         const width = 1600;
         const height = 1000;
 
@@ -439,22 +456,23 @@
                 g.attr('transform', event.transform);
             }));
 
-        // Create simulation
+        // Force simulation
         const simulation = d3.forceSimulation(nodes)
             .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
                 if (d.type === 'uses_forecast') return 150;
-                if (d.type === 'generated_by') return 120;
-                if (d.type === 'uses_dataset') return 100;
+                if (d.type === 'generated_by')  return 120;
+                if (d.type === 'uses_dataset')  return 100;
+                if (d.type === 'inputs_forecast') return 110;
                 return 100;
             }))
             .force('charge', d3.forceManyBody().strength(-600))
             .force('center', d3.forceCenter(width / 2, height / 2))
             .force('collision', d3.forceCollide().radius(50))
             .force('x', d3.forceX(d => {
-                if (d.type === 'project') return width * 0.15;
-                if (d.type === 'forecast') return width * 0.4;
-                if (d.type === 'model') return width * 0.6;
-                if (d.type === 'dataset') return width * 0.85;
+                if (d.type === 'project')  return width * 0.15;
+                if (d.type === 'forecast') return width * 0.40;
+                if (d.type === 'model')    return width * 0.60;
+                if (d.type === 'dataset')  return width * 0.85;
                 return width / 2;
             }).strength(0.3))
             .force('y', d3.forceY(height / 2).strength(0.1));
@@ -462,13 +480,14 @@
         // Create links
         const link = g.append('g')
             .selectAll('line')
-            .data(links)
+            .data(links, d => `${d.source}-${d.target}-${d.type}`)
             .join('line')
             .attr('class', 'link')
             .attr('stroke', d => {
-                if (d.type === 'uses_forecast') return '#64748b';
-                if (d.type === 'generated_by') return '#7c3aed';
-                if (d.type === 'uses_dataset') return '#059669';
+                if (d.type === 'uses_forecast')   return '#64748b';
+                if (d.type === 'generated_by')    return '#7c3aed';
+                if (d.type === 'inputs_forecast') return '#0f766e';
+                if (d.type === 'uses_dataset')    return '#059669';
                 return '#94a3b8';
             })
             .attr('stroke-width', 1.5);
@@ -480,9 +499,9 @@
             .join('circle')
             .attr('class', 'node')
             .attr('r', d => {
-                if (d.type === 'project') return 14;
+                if (d.type === 'project')  return 14;
                 if (d.type === 'forecast') return 12;
-                if (d.type === 'model') return 10;
+                if (d.type === 'model')    return 10;
                 return 8;
             })
             .attr('fill', d => color(d.type))
@@ -509,7 +528,7 @@
                     .attr('r', d.type === 'project' ? 14 : d.type === 'forecast' ? 12 : d.type === 'model' ? 10 : 8);
             });
 
-        // Add labels
+        // Labels
         const labels = g.append('g')
             .selectAll('text')
             .data(nodes)
@@ -523,7 +542,7 @@
             .style('user-select', 'none')
             .attr('fill', '#1e293b');
 
-        // Update positions
+        // Tick
         simulation.on('tick', () => {
             link
                 .attr('x1', d => d.source.x)
@@ -540,7 +559,6 @@
                 .attr('y', d => d.y);
         });
 
-        // Drag functions
         function dragstarted(event, d) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x;
@@ -558,7 +576,6 @@
             d.fy = null;
         }
 
-        // Show node info
         function showNodeInfo(d) {
             const infoBox = document.getElementById('node-info');
             const colorMap = {
@@ -567,34 +584,33 @@
                 'model': '#ec4899',
                 'dataset': '#10b981'
             };
-            
+
             document.getElementById('node-color').style.backgroundColor = colorMap[d.type];
             document.getElementById('node-id').textContent = d.id;
             document.getElementById('node-name').textContent = d.name;
             document.getElementById('node-type').textContent = d.type;
-            
+
             infoBox.classList.remove('hidden');
         }
 
-        // Highlight connections
         function highlightConnections(d) {
-            link.classed('link-dim', true);
-            link.filter(l => 
+            link.classed('link-dim', true).classed('link-highlight', false);
+
+            link.filter(l =>
                 (l.source.id === d.id || l.target.id === d.id) ||
                 (l.source === d.id || l.target === d.id)
             ).classed('link-dim', false).classed('link-highlight', true);
         }
 
-        // Reset highlighting
         function resetHighlight() {
             link.classed('link-dim', false).classed('link-highlight', false);
         }
 
-        // Close button
         document.getElementById('close-btn').addEventListener('click', () => {
             document.getElementById('node-info').classList.add('hidden');
             resetHighlight();
         });
     </script>
+
 </body>
 </html>
